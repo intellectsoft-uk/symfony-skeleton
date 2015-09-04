@@ -1,0 +1,12 @@
+{
+  "name": "intellectsoft-backend-skeleton",
+  "version": "1.0.0",
+  "description": "Backend template project",
+  "main": "backend_skeleton",
+  "author": "Intellectsoft Team <corporate@intellectsoft.org>",
+  "license": "proprietary",
+  "dependencies": {
+    "aglio": "^2.0.4"
+  },
+  "devDependencies": {}
+}

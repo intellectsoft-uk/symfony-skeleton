@@ -19,3 +19,4 @@ devops/roles/galaxy/*
 /web/bundles/
 
 !.gitkeep
+web/api_documentation.html

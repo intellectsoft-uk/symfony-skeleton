@@ -1,0 +1,21 @@
+fos_rest:
+  body_converter:
+        enabled: false
+        validate: true
+        validation_errors_argument: validationErrors
+  view:
+      view_response_listener: force
+  routing_loader:
+      default_format: json
+      include_format: false
+  access_denied_listener:
+      json: true
+  serializer:
+      serialize_null: true
+  exception:
+      codes:
+          'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+          'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+      messages:
+          Symfony\Component\HttpKernel\Exception\BadRequestHttpException: true
+          Symfony\Component\HttpKernel\Exception\NotFoundHttpException: true

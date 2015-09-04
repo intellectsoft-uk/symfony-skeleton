@@ -1,3 +1,8 @@
+fos_user_security_check:
+    path: api/login
+    defaults:  { _controller: FOSUserBundle:Security:check}
+    methods:  [POST]
+
 #app:
 #    resource: "@AppBundle/Controller/"
 #    type:     annotation
