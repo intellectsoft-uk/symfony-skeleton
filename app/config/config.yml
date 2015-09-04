@@ -2,6 +2,11 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: services.yml }
+    - { resource: bundles/fos_rest.yml }
+    - { resource: bundles/fos_user.yml }
+    - { resource: bundles/vich_uploader.yml }
+    - { resource: bundles/lexik_jwt_authentication.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -16,7 +21,8 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: ~
+    csrf_protection:
+        enabled:        false
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -29,11 +35,14 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    serializer:
+        enabled: true
 
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Assetic Configuration
 assetic:
@@ -68,6 +77,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -76,3 +86,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sensio_framework_extra:
+    view:    { annotations: false }
+    request: { converters: true }

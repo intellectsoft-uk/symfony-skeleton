@@ -20,7 +20,13 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/migrations": "1.0.*@dev",
-        "doctrine/doctrine-migrations-bundle": "2.1.*@dev"
+        "doctrine/doctrine-migrations-bundle": "2.1.*@dev",
+        "friendsofsymfony/user-bundle": "2.0.x-dev",
+        "friendsofsymfony/rest-bundle": "^1.7",
+        "lexik/jwt-authentication-bundle": "^1.1",
+        "symfony/serializer": "^2.7",
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+        "qandidate/symfony-json-request-transformer": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
