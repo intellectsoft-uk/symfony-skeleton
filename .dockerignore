@@ -10,4 +10,5 @@ support/scripts
 support/*.yml
 support/aliases
 support/env
-var
+!var/bootstrap.php.cache
+var/*
