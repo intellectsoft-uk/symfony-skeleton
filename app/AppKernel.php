@@ -47,4 +47,24 @@ class AppKernel extends Kernel
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
+
+    /**
+     * Gets the environment parameters.
+     *
+     * All parameters considered. Parameters will be converted to format "env.variable1.part2"
+     * @example:
+     * POSTGRES_DB - "env.postgres.db"
+     * SYMFONY__DATABASE__NAME - "env.symfony..database..name"
+     *
+     * @return array An array of parameters
+     */
+    protected function getEnvParameters()
+    {
+        $parameters = array();
+        foreach ($_SERVER as $key => $value) {
+            $parameters["env.".strtolower(str_replace('_', '.', $key))] = $value;
+        }
+
+        return $parameters;
+    }
 }
