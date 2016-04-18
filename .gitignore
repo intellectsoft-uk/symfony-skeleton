@@ -8,3 +8,7 @@
 /composer.phar
 /front/web/bundles
 !.gitkeep
+
+# deploy tmp files
+/docker-compose.prod.yml
+/prod.env

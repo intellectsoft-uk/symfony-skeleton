@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -e
+
+dir=$(dirname "${BASH_SOURCE[0]}")
+source "$dir/../env/dev.env"
+export $(cut -f1 "$dir/../env/dev.env" | grep -v "^#.*")
+
+if [ -z "$PROJECT_NAME" ];
+then
+    echo "PROJECT_NAME is not set. Please, define it \"export PROJECT_NAME=myapp\""
+    exit 1
+fi
+
+set +e
+grep -q "auth\"" "$HOME/.docker/config.json"
+exitCode=$?
+set -e
+
+if [ $exitCode -ne 0 ] && [ "$DOCKER_SKIP_LOGIN" != "true" ];
+then
+   echo "You need to run \"docker login\" to your registry\n"
+   exit 1
+fi
+
+# Prepare project
+$dir/../shortcuts/composer install --ignore-platform-reqs
+
+# Generate any documentation here
+
+# Build images
+docker-compose -p $PROJECT_NAME build
+
+echo "Tests done"
+
+# Tag image for dev/test/master branches only
+if [[ "${DOCKER_TAG}" != "" ]]; then
+    echo "Publish docker tag: $DOCKER_TAG"
+
+    docker tag $PROJECT_NAME"_php" "${DOCKER_REGISTRY}${DOCKER_USER}/${PROJECT_NAME}php:$DOCKER_TAG"
+    docker tag $PROJECT_NAME"_front" "${DOCKER_REGISTRY}${DOCKER_USER}/${PROJECT_NAME}front:$DOCKER_TAG"
+
+    docker push "${DOCKER_REGISTRY}${DOCKER_USER}/${PROJECT_NAME}php:$DOCKER_TAG"
+    docker push "${DOCKER_REGISTRY}${DOCKER_USER}/${PROJECT_NAME}front:$DOCKER_TAG"
+else
+    echo "Skip publishing of docker tag - '$DOCKER_TAG'"
+fi

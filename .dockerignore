@@ -6,8 +6,9 @@ README.md
 Makefile
 docker-compose.yml
 front
-support/scripts
-support/*.yml
-support/aliases
-support/env
-var
+
+!support/php
+support/*
+
+!var/bootstrap.php.cache
+var/*

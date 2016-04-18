@@ -1,0 +1,27 @@
+version: "2"
+services:
+    php:
+        image: "${DOCKER_REPOSITORY}${DOCKER_USER}/${PROJECT_NAME}php:${DOCKER_TAG}"
+        depends_on:
+            - database
+        env_file: prod.env
+        environment:
+            SYMFONY_ENV: prod
+    front:
+        image: "${DOCKER_REPOSITORY}${DOCKER_USER}/${PROJECT_NAME}front:${DOCKER_TAG}"
+        depends_on:
+            - php
+        ports:
+            - 80:80
+
+    database:
+        image: postgres:9.4
+        env_file: prod.env
+        volumes:
+            - dbdata:/var/lib/postgresql
+        ports:
+            - 5432:5432
+
+volumes:
+    dbdata:
+        driver: local

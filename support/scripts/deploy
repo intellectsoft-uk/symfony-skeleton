@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# Please note that this script should be run on server
+set -e
+
+dir=$(dirname "${BASH_SOURCE[0]}")
+source "$dir/../env/dev.env"
+export $(cut -f1 "$dir/../env/dev.env" | grep -v "^#.*")
+
+if [ ! -f prod.env ]; then
+DOCKER_DEPLOY_MACHINE=docker@my-deploy-machine
+>&2 echo "
+
+Broken environment. Please, put file support/env/dev.env as prod.env and update environment variables for your server.
+
+You may use following script on CI or as your deploy script:
+scp support/scripts/deploy $DOCKER_DEPLOY_MACHINE:.
+scp support/docker-compose.prod.yml $DOCKER_DEPLOY_MACHINE:.
+ssh $DOCKER_DEPLOY_MACHINE ./deploy
+";
+
+    exit 1
+fi
+
+
+if [ "$DOCKER_TAG" == "" ]; then
+    echo "Broken environment. Please, verify your prod.env"
+    exit 1
+fi
+
+if [ ! -f docker-compose.prod.yml ]; then
+    echo "Broken docker-compose.yml. Please, put file docker-compose.prod.yml on server in default folder"
+    exit 1
+fi
+
+docker-compose -p $PROJECT_NAME -f docker-compose.prod.yml pull
+docker-compose -p $PROJECT_NAME -f docker-compose.prod.yml up -d
