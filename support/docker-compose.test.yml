@@ -3,11 +3,7 @@ version: "2"
 services:
     php:
         tty: true
-        env_file: support/env/dev.env
         environment:
             SYMFONY_ENV: test
         volumes:
             - '.:/srv'
-
-    database:
-        env_file: support/env/dev.env
