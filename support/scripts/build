@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+dir=$(dirname "${BASH_SOURCE[0]}")
+
+docker run --rm \
+     --user $(id -u) \
+     -v $(pwd):/app \
+     -v ~/.composer:/composer \
+     fesor/composer install --ignore-platform-reqs --optimize-autoloader
+
+export COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml
+docker-compose build --force-rm
+# Spooky bash hack for getting all images built by docker-compose
+images=$(docker-compose config | grep image | sed -e 's/^[ \t]*image\:[ ]*//')
+for image in $images; do
+    echo "pushing image: $image"
+    docker push $image
+done
