@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-compose=$(dirname "$0")/compose
-$compose run --user $(id -u) --no-deps php $@
+docker-compose run --user $(id -u) --no-deps --rm php $@

@@ -5,6 +5,12 @@ services:
         build: '.'
         depends_on:
             - database
+        environment:
+            - SYMFONY_ENV=prod
+            - SYMFONY__DATABASE__USER=${DB_USER}
+            - SYMFONY__DATABASE__NAME=${DB_NAME}
+            - SYMFONY__DATABASE__PASS=${DB_PASS}
+            - SYMFONY__APP__SECRET=${APP_SECRET}
 
     front:
         build: 'front'
@@ -13,3 +19,8 @@ services:
 
     database:
         build: 'support/database'
+        environment:
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_PASSWORD=${DB_PASS}
+            - PGPASSWORD=${DB_PASS}

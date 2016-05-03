@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-docker run --rm -it \
+docker run --rm \
      --user $(id -u) \
      -v $(pwd):/app \
      -v ~/.composer:/composer \
-     -e COMPOSER_HOME="/composer" \
-     --env-file ./support/env/dev.env \
-     composer/composer:php7 $@
+     fesor/composer $@

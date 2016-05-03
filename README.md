@@ -11,7 +11,7 @@ Well... it's basically that's simple:
 $ composer create-project intellectsoft/backend-skeleton target-directory
 ```
 
-Then simple wizart will be started to finish project configuration. It will change project name in `composer.json`, for docker-compose and set correct namespaces.
+Then simple wizard will be started to finish project configuration. It will change project name in `composer.json`, for docker-compose and set correct namespaces.
 
 ## What's included
 
@@ -27,9 +27,9 @@ This is our day-to-day backend dev stack
 
 ## Required software
 
- - Docker 1.9+
- - Docker-compose 1.6+
- - Docker-machine 0.6+
+ - Docker 1.10+
+ - Docker-compose 1.7+
+ - Docker-machine 0.7+
 
 ### Docker
 
@@ -62,7 +62,6 @@ By doing this, you will be able to use short versions of commands:
 php                         # run command in php container
 console                     # symfony console running via docker container
 psql                        # connects psql to your database using containers
-compose                     # shortcut for `docker-compose -p app`. This needed until docker-compose 1.7 is released.
 composer                    # shortcut for running composer (with php7 in separate docker container)
 phpspec                     # shortcut for running PhpSpec
 behat                       # shortcut for running Behat in test environment
@@ -84,9 +83,9 @@ This projects template also includes xdebug extensions for remote debugging. To 
 
 In production environment xdebug is disabled.
 
-## Deployment
+## Build and Deployment
 
-TODO
+
 
 ### HTTPS support
 
@@ -94,7 +93,9 @@ This skeleton includes config for SSL. To make your API available by https, just
 
 ```
 services:
+    # ...
     front:
+        # ...
         ports:
             - 80:80
             - 443:443
