@@ -85,7 +85,30 @@ In production environment xdebug is disabled.
 
 ## Build and Deployment
 
+To build images you could simple run `docker-compose build`. To simplify process we provide you a simple bash script which is placed in `support/scripts/build`. This script will prepare dependencies, build, tag and push images on your registry. Please note that `docker login` should be performed before build & deploy.
 
+### Continuous Integration
+
+You may want to use CI server as part of your development workflow to automate all this build/deployment routine. We suggest you to have separate build and deploy jobs to be more scalable.
+
+For example, if you want to pass some secure sensitive data inside your container, it's better not to do this in `Dockerfile`. Instead of it, pass it into container only on start (certificates and keys via volumes and tokens and password via `-e` option of `docker run`).
+
+To handle ENV variables more easily we recommend you to inject them into your CI deploy job and they will be interpolated in `docker-compose.yml`.
+
+### Deployment
+
+We recommend to use docker-machine for host provisioning and deployment. Since docker uses client-side architecture, we could just switch to remote docker-demon with docker-machine. In this case deployment process is very simple:
+
+```
+eval $(docker-machine env $YOUR_REMOTE_HOST)
+
+export COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml
+
+docker-compose pull
+docker-compose up -d
+```
+
+The only limitation, is that if your project requires multiple machines, this option is working only for swarm cluster.
 
 ### HTTPS support
 
