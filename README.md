@@ -84,6 +84,18 @@ This projects template also includes xdebug extensions for remote debugging. To 
 
 In production environment xdebug is disabled.
 
+### XDebug CLI scripts
+
+If you want To debug cli command You need to do following:
+
+ - Provide your docker container ability to see your IDE. Localy, you need to run ifconfig(ipconfig) and find out your IDE IP address.
+ - run cli command with parameter -dxdebug.remote_host={IDE_IP_ADDRESS}
+
+        docker-compose -p app run php php -dxdebug.remote_host=192.168.99.1 bin/console
+ - (optional) for JetBrains you need to set PHP_IDE_CONFIG:
+
+        docker-compose -p app -e PHP_IDE_CONFIG="serverName=app.docker" run php php -dxdebug.remote_host=192.168.99.1 bin/console
+
 ## Deployment
 
 TODO
