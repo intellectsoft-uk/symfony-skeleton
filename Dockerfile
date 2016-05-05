@@ -19,14 +19,7 @@ RUN yes | pecl install xdebug-beta \
         && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 COPY support/php/fpm_www.conf /usr/local/etc/php-fpm.d/www.conf
-
-COPY vendor /srv/vendor
-COPY bin /srv/bin
-COPY var /srv/var
-COPY app /srv/app
-COPY src /srv/src
-COPY app.php boot.sh /srv/
+COPY . /srv/
 
 WORKDIR /srv
-
 CMD ["bash", "boot.sh"]
