@@ -71,7 +71,7 @@ behat                       # shortcut for running Behat in test environment
 
 To start dev environment, first you need to install project dependencies via composer. You could use your local composer or by running `composer install --ignore-platform-reqs` command.
 
-After this, just run `compose up` and you are ready to go.
+After this, just run `docker-compose up` and you are ready to go.
 
 ### Testing
 
