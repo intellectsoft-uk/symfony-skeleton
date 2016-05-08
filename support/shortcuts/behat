@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-compose=$(dirname "$0")/compose
-$compose -f docker-compose.yml -f support/docker-compose.test.yml \
-         run --no-deps --rm php bin/behat $@
+COMPOSE_FILE=docker-compose.yml:support/docker-compose.test.yml
+docker-compose run --user $(id -u) --no-deps --rm php bin/behat $@

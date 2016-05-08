@@ -1,21 +1,14 @@
 #!/usr/bin/env bash
 
-# setup project name
-set -a
-[ -f .env ] && . .env
-set +a
-
-COMPOSE_PROJECT_NAME="{$COMPOSE_PROJECT_NAME}_test"
-
-compose="docker-compose -f docker-compose.yml -f support/docker-compose.test.yml"
+COMPOSE_FILE=docker-compose.yml:support/docker-compose.test.yml
 
 # Run phpspec tests
-$compose run --no-deps php bin/phpspec run && \
+docker-compose run --user $(id -u) --no-deps php bin/phpspec run && \
 
 # Run integration/E2E tests
-$compose up --no-deps -d database && \
-$compose run --rm --no-deps php bin/healthcheck 10 && \
-$compose run --rm --no-deps php bin/behat
+docker-compose up --no-deps -d database && \
+docker-compose run --user $(id -u) --rm --no-deps php bin/healthcheck 10 && \
+docker-compose run --user $(id -u) --rm --no-deps php bin/behat
 
 if [ $? -eq 0 ]
 then
@@ -25,5 +18,5 @@ else
 fi
 
 # Cleanup after tests
-$compose kill && \
-$compose rm -f -v
+docker-compose kill && \
+docker-compose rm --all -f

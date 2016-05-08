@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+    php:
+        image: ${REGISTRY_URL}/${COMPOSE_PROJECT_NAME}/php:${DOCKER_TAG}
+        environment:
+            - SYMFONY_ENV=prod
+
+    front:
+        image: ${REGISTRY_URL}/${COMPOSE_PROJECT_NAME}/front:${DOCKER_TAG}
+        ports:
+            - 80:80
+
+    database:
+        image: ${REGISTRY_URL}/${COMPOSE_PROJECT_NAME}/database:${DOCKER_TAG}
+        volumes:
+            - 'dbdata:/var/lib/postgresql'
+
+volumes:
+    dbdata:
+        driver: local

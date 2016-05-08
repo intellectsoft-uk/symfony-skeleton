@@ -95,13 +95,14 @@ function replaceNamespaces($namespaces) {
     }
 }
 
-function changeDockerComposeProjectName($projectName)
+function changeDockerComposeEnvFile($projectName, $registryURL)
 {
     $projectName = strtolower($projectName);
 
     $file = __DIR__ . '/../../.env';
     file_put_contents($file, strtr(file_get_contents($file), [
-        'COMPOSE_PROJECT_NAME=skeleton' => 'COMPOSE_PROJECT_NAME=' . $projectName
+        'COMPOSE_PROJECT_NAME=skeleton' => 'COMPOSE_PROJECT_NAME=' . $projectName,
+        'REGISTRY_URL=registry.example.com' => 'REGISTRY_URL=' . $registryURL
     ]));
 }
 
@@ -123,9 +124,10 @@ $projectNamespace = askFor(
         return null;
     }
 );
+$registryUrl = askFor('Your Docker Registry URL:');
 
 updateComposerInfo($projectName, $projectDescription, $projectNamespace);
 replaceNamespaces($projectNamespace);
-changeDockerComposeProjectName($projectNamespace);
+changeDockerComposeEnvFile($projectNamespace, $registryUrl);
 
 unlink(__FILE__);

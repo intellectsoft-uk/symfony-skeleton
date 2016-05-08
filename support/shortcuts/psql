@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-compose=$(dirname "$0")/compose
-container=$($compose ps | grep "database" | cut -d" " -f 1)
+container=$(docker-compose ps | grep "database" | cut -d" " -f 1)
 
 docker exec -it $container sh -c 'exec psql -h database -p 5432 -U $POSTGRES_USER'
