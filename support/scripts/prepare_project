@@ -128,6 +128,6 @@ $registryUrl = askFor('Your Docker Registry URL:');
 
 updateComposerInfo($projectName, $projectDescription, $projectNamespace);
 replaceNamespaces($projectNamespace);
-changeDockerComposeEnvFile($projectNamespace, $registryUrl);
+changeDockerComposeEnvFile($projectName, $registryUrl);
 
 unlink(__FILE__);
