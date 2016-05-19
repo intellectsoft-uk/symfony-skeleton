@@ -16,10 +16,12 @@ RUN yes | pecl install xdebug-beta \
         && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
         && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
         && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-        && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini
+        && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+        && echo "xdebug.remote_host=$(ip route|awk '/default/ { print $3 }')" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 COPY support/php/fpm_www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY . /srv/
+RUN chown -R www-data /srv
 
 WORKDIR /srv
-CMD ["bash", "boot.sh"]
+CMD ["bash", "support/php/boot.sh"]

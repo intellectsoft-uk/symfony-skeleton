@@ -6,5 +6,5 @@
 !/bin/console
 /var/*
 /composer.phar
-/front/web/bundles
+/web/bundles
 !.gitkeep

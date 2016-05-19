@@ -6,6 +6,8 @@ services:
             - '.:/srv'
         environment:
             - SYMFONY_ENV=dev
+            - PHP_IDE_CONFIG=serverName=docker
+            - USER_ID=${USER_ID}
 
     front:
         ports:
