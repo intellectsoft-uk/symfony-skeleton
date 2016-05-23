@@ -4,8 +4,9 @@
 function askFor($description, $default = null, callable $validate = null)
 {
     echo $description;
-    $msg = null;
     do {
+        $msg = null;
+
         if (PHP_OS == 'WINNT') {
             echo ': ';
             $line = stream_get_line(STDIN, 1024, PHP_EOL);
