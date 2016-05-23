@@ -107,7 +107,7 @@ function changeDockerComposeEnvFile($projectName, $registryURL)
 }
 
 $projectName = askFor('Project Name [intellectsoft/app]', 'intellectsoft/app', function ($val) {
-    if (!preg_match('/^\w+\/\w+$/', $val)) {
+    if (!preg_match('/^[\w\d_-]+\/[\w\d_-]+$/', $val)) {
         return 'Please enter valid values [intellectsoft/app]';
     }
 });
