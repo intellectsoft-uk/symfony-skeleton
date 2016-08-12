@@ -2,7 +2,9 @@ version: "2"
 
 services:
     php:
-        build: '.'
+        build:
+            context: .
+            dockerfile: support/php/Dockerfile
         depends_on:
             - database
         environment:
@@ -13,7 +15,9 @@ services:
             - SYMFONY__APP__SECRET=${APP_SECRET}
 
     front:
-        build: 'front'
+        build:
+            context: .
+            dockerfile: support/front/Dockerfile
         depends_on:
             - php
 
