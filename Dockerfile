@@ -17,6 +17,10 @@ RUN yes | pecl install xdebug-beta \
         && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
         && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
         && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini
+        
+RUN yes | pecl install apcu \
+        && echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini \
+        && echo "apc.enable_cli=1" >> /usr/local/etc/php/conf.d/apcu.ini
 
 COPY support/php/fpm_www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY . /srv/
