@@ -11,7 +11,7 @@
         "psr-4": {"features\\App\\": "features/bootstrap"}
     },
     "require": {
-        "php": ">=7.0.1",
+        "php": ">=7.0.0",
         "symfony/symfony": "3.0.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
